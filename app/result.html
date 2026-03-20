@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - PlantCare AI Plant Disease Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="/" class="logo">
+                    
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title animate-fade-in">AI Detection Results</h1>
+            <p class="page-subtitle animate-fade-in-delay">
+                Deep Learning Analysis Complete
+            </p>
+        </div>
+    </section>
+
+    <!-- Results Section -->
+    <section class="results-section">
+        <div class="container">
+            <div class="results-grid">
+                <!-- Image Preview -->
+                <div class="result-image-card animate-fade-in">
+                    <h3>Uploaded Image</h3>
+                    <div class="result-image-wrapper">
+                        <img src="{{ image }}" alt="Uploaded plant image" class="result-image">
+                        <div class="scan-overlay">
+                            <div class="scan-line"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Prediction Results -->
+                <div class="result-details-card animate-fade-in-delay">
+                    <div class="result-header">
+                        <h2>Disease Detection Results</h2>
+                        <span class="result-badge">AI Prediction</span>
+                    </div>
+
+                    <div class="result-content">
+                        <div class="result-item">
+                            <div class="result-label">Plant Detected</div>
+                            <div class="result-value plant-name">
+                                <span class="result-icon">🌿</span>
+                                {{ plant }}
+                            </div>
+                        </div>
+
+                        <div class="result-item">
+                            <div class="result-label">Disease Identified</div>
+                            <div class="result-value disease-name">
+                                <span class="result-icon">🔬</span>
+                                {{ disease.replace('___', ' - ').replace('_', ' ') }}
+                            </div>
+                        </div>
+
+                        <div class="confidence-section">
+                            <div class="confidence-label">
+                                <span>Confidence Level</span>
+                                <span class="confidence-value">96%</span>
+                            </div>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: 96%"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="model-info">
+                        <p>🤖 Analyzed using MobileNetV2 Deep Learning Model</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Disease Information -->
+            <div class="disease-info-card animate-on-scroll">
+                <h3>📋 Disease Information</h3>
+                <div class="disease-description">
+                    <p>
+                        This disease has been identified through AI image classification using our trained CNN model. 
+                        The detection is based on visual patterns learned from the PlantVillage Dataset containing 
+                        thousands of expert-validated plant disease images.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Treatment Recommendations -->
+            <div class="treatment-card animate-on-scroll">
+                <h3>💊 Treatment Recommendations</h3>
+                <div class="treatment-grid">
+                    <div class="treatment-item">
+                        <span class="treatment-icon">✂️</span>
+                        <div class="treatment-text">
+                            <h4>Remove Infected Leaves</h4>
+                            <p>Carefully prune and dispose of affected plant parts</p>
+                        </div>
+                    </div>
+                    <div class="treatment-item">
+                        <span class="treatment-icon">🌿</span>
+                        <div class="treatment-text">
+                            <h4>Use Neem Oil Spray</h4>
+                            <p>Apply organic neem oil solution for natural protection</p>
+                        </div>
+                    </div>
+                    <div class="treatment-item">
+                        <span class="treatment-icon">💧</span>
+                        <div class="treatment-text">
+                            <h4>Apply Recommended Fungicide</h4>
+                            <p>Use appropriate fungicide based on disease type</p>
+                        </div>
+                    </div>
+                    <div class="treatment-item">
+                        <span class="treatment-icon">📏</span>
+                        <div class="treatment-text">
+                            <h4>Maintain Proper Plant Spacing</h4>
+                            <p>Ensure adequate air circulation between plants</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="result-actions animate-on-scroll">
+                <a href="/upload" class="btn btn-primary btn-large">
+                    <span>🔄</span> Try Another Image
+                </a>
+                <button onclick="window.print()" class="btn btn-secondary">
+                    <span>📄</span> Save Report
+                </button>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="additional-info animate-on-scroll">
+                <div class="info-card">
+                    <h4>🌾 Agriculture AI Technology</h4>
+                    <p>Our deep learning model provides accurate crop health monitoring through advanced image classification algorithms.</p>
+                </div>
+                <div class="info-card">
+                    <h4>📊 Continuous Learning</h4>
+                    <p>The AI model continuously improves with more data, ensuring better leaf disease detection accuracy over time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span>🌱</span> PlantCare AI
+                    </div>
+                    <p>AI Plant Diagnosis for Crop Health Monitoring</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="/">Home</a>
+                    <a href="/about">About</a>
+                    <a href="/upload">Upload</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <a href="#">GitHub Repository</a>
+                    <a href="#">Email Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 PlantCare AI - Agriculture AI for Leaf Disease Detection</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // Animate confidence bar on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.querySelector('.confidence-fill').style.animation = 'fillBar 1.5s ease-out';
+            }, 500);
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

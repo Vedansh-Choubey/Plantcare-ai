@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload - PlantCare AI Plant Disease Detection</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="/" class="logo">
+                    <span class="logo-icon">🌱</span>
+                    <span class="logo-text">PlantCare AI</span>
+                </a>
+                <div class="nav-menu" id="navMenu">
+                    <a href="/" class="nav-link">Home</a>
+                    <a href="/about" class="nav-link">About</a>
+                    <a href="/upload" class="nav-link active">Upload</a>
+                </div>
+                <button class="nav-toggle" id="navToggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1 class="page-title animate-fade-in">Upload Plant Image</h1>
+            <p class="page-subtitle animate-fade-in-delay">
+                AI-powered leaf disease detection using deep learning
+            </p>
+        </div>
+    </section>
+
+    <!-- Upload Section -->
+    <section class="upload-section">
+        <div class="container">
+            <form action="/predict" method="POST" enctype="multipart/form-data" id="uploadForm">
+                <div class="upload-card animate-fade-in">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <div class="upload-icon">
+                                <span class="leaf-icon">🍃</span>
+                            </div>
+                            <h3>Drag and Drop Image Here</h3>
+                            <p>or</p>
+                            <label for="fileInput" class="btn btn-secondary">
+                                Choose File
+                            </label>
+                            <input type="file" 
+                                   id="fileInput" 
+                                   name="file" 
+                                   accept="image/*" 
+                                   required 
+                                   hidden>
+                            <p class="upload-hint">
+                                Upload a clear image of a plant leaf for best results.
+                                <br>
+                                Supported formats: JPG, PNG
+                            </p>
+                        </div>
+                        <div class="upload-preview" id="uploadPreview" style="display: none;">
+                            <img id="previewImage" src="" alt="Preview">
+                            <button type="button" class="remove-image" id="removeImage">✕</button>
+                        </div>
+                    </div>
+                    
+                    <div class="upload-actions">
+                        <button type="submit" class="btn btn-primary btn-large" id="predictBtn" disabled>
+                            <span class="btn-icon">🔍</span>
+                            <span class="btn-text">Predict Disease</span>
+                            <div class="loading-spinner" id="loadingSpinner"></div>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+            <!-- Instructions -->
+            <div class="instructions-card animate-on-scroll">
+                <h3>📸 Tips for Best Results</h3>
+                <div class="tips-grid">
+                    <div class="tip">
+                        <span class="tip-icon">✓</span>
+                        <p>Use good lighting</p>
+                    </div>
+                    <div class="tip">
+                        <span class="tip-icon">✓</span>
+                        <p>Clear leaf image</p>
+                    </div>
+                    <div class="tip">
+                        <span class="tip-icon">✓</span>
+                        <p>Focus on affected area</p>
+                    </div>
+                    <div class="tip">
+                        <span class="tip-icon">✓</span>
+                        <p>Avoid blurry photos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Supported Plants Reminder -->
+            <div class="plants-reminder animate-on-scroll">
+                <h3>Supported Plants for Disease Detection</h3>
+                <div class="plant-tags">
+                    <span class="plant-tag">🍎 Apple</span>
+                    <span class="plant-tag">🍅 Tomato</span>
+                    <span class="plant-tag">🌽 Corn</span>
+                    <span class="plant-tag">🍇 Grape</span>
+                    <span class="plant-tag">🥔 Potato</span>
+                    <span class="plant-tag">🍓 Strawberry</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <span>🌱</span> PlantCare AI
+                    </div>
+                    <p>AI Plant Diagnosis for Crop Health Monitoring</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <a href="/">Home</a>
+                    <a href="/about">About</a>
+                    <a href="/upload">Upload</a>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact</h4>
+                    <a href="#">GitHub Repository</a>
+                    <a href="#">Email Contact</a>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 PlantCare AI - Agriculture AI for Leaf Disease Detection</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('navToggle').addEventListener('click', function() {
+            document.getElementById('navMenu').classList.toggle('active');
+            this.classList.toggle('active');
+        });
+
+        // File upload handling
+        const fileInput = document.getElementById('fileInput');
+        const uploadArea = document.getElementById('uploadArea');
+        const uploadPreview = document.getElementById('uploadPreview');
+        const previewImage = document.getElementById('previewImage');
+        const removeImage = document.getElementById('removeImage');
+        const predictBtn = document.getElementById('predictBtn');
+        const uploadForm = document.getElementById('uploadForm');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        // Drag and drop
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('drag-over');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('drag-over');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('drag-over');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                fileInput.files = files;
+                handleFileSelect(files[0]);
+            }
+        });
+
+        // File input change
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files.length > 0) {
+                handleFileSelect(e.target.files[0]);
+            }
+        });
+
+        // Handle file selection
+        function handleFileSelect(file) {
+            if (file && file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    previewImage.src = e.target.result;
+                    uploadPreview.style.display = 'block';
+                    uploadArea.querySelector('.upload-content').style.display = 'none';
+                    predictBtn.disabled = false;
+                    uploadArea.classList.add('has-image');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Remove image
+        removeImage.addEventListener('click', () => {
+            fileInput.value = '';
+            uploadPreview.style.display = 'none';
+            uploadArea.querySelector('.upload-content').style.display = 'block';
+            predictBtn.disabled = true;
+            uploadArea.classList.remove('has-image');
+        });
+
+        // Form submission with loading state
+        uploadForm.addEventListener('submit', function() {
+            predictBtn.classList.add('loading');
+            predictBtn.disabled = true;
+        });
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
